@@ -1,4 +1,5 @@
 import { experienceEntries } from '../data/experience';
+import { useReveal } from '../hooks/useReveal';
 import './Experience.css';
 
 const TYPE_LABEL: Record<string, string> = {
@@ -10,15 +11,20 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 export default function Experience() {
+  const headerRef = useReveal<HTMLDivElement>();
+  const bodyRef   = useReveal<HTMLDivElement>();
+
   return (
     <section id="experience" className="section experience" aria-labelledby="experience-heading">
       <div className="container">
-        <span className="section-label">Professional background</span>
-        <h2 className="section-title" id="experience-heading">Experience</h2>
-        <p className="section-subtitle">
-          I'm building my experience through engineering projects, internships, and
-          continued learning. Here's where I've had the chance to apply and grow.
-        </p>
+        <div ref={headerRef} className="reveal">
+          <span className="section-label">Professional background</span>
+          <h2 className="section-title" id="experience-heading">Experience</h2>
+          <p className="section-subtitle">
+            I'm building my experience through engineering projects, internships, and
+            continued learning. Here's where I've had the chance to apply and grow.
+          </p>
+        </div>
 
         {experienceEntries.length === 0 ? (
           <div className="experience__empty">
@@ -31,7 +37,7 @@ export default function Experience() {
             </p>
           </div>
         ) : (
-          <div className="experience__timeline" role="list">
+          <div ref={bodyRef} className="experience__timeline reveal reveal-delay-1" role="list">
             {experienceEntries.map((entry, i) => (
               <article
                 key={entry.id}

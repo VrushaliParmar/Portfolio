@@ -1,3 +1,4 @@
+import { useReveal } from '../hooks/useReveal';
 import './About.css';
 
 const SKILLS = [
@@ -21,11 +22,14 @@ const COURSEWORK = [
 ];
 
 export default function About() {
+  const headerRef = useReveal<HTMLDivElement>();
+  const bodyRef   = useReveal<HTMLDivElement>();
+
   return (
     <section id="about" className="section about" aria-labelledby="about-heading">
       <div className="container">
         {/* Header */}
-        <div className="about__header">
+        <div ref={headerRef} className="about__header reveal">
           <span className="section-label">About me</span>
           <h2 className="section-title" id="about-heading">
             Engineering student.<br />
@@ -34,7 +38,7 @@ export default function About() {
         </div>
 
         {/* Two-column layout */}
-        <div className="about__body">
+        <div ref={bodyRef} className="about__body reveal reveal-delay-1">
           {/* Story */}
           <div className="about__story">
             <p className="about__lead">
@@ -59,7 +63,9 @@ export default function About() {
 
             {/* Education cards */}
             <div className="about__edu-card">
-              <div className="about__edu-icon" aria-hidden="true">🎓</div>
+              <div className="about__edu-icon" aria-hidden="true">
+                <CapIcon />
+              </div>
               <div>
                 <p className="about__edu-degree">
                   B.Tech in Electronics &amp; Telecommunication Engineering
@@ -72,7 +78,9 @@ export default function About() {
             </div>
 
             <div className="about__edu-card">
-              <div className="about__edu-icon" aria-hidden="true">📘</div>
+              <div className="about__edu-icon" aria-hidden="true">
+                <BookIcon />
+              </div>
               <div>
                 <p className="about__edu-degree">
                   HSC — Class XII
@@ -85,7 +93,9 @@ export default function About() {
             </div>
 
             <div className="about__edu-card">
-              <div className="about__edu-icon" aria-hidden="true">📗</div>
+              <div className="about__edu-icon" aria-hidden="true">
+                <SchoolIcon />
+              </div>
               <div>
                 <p className="about__edu-degree">
                   SSC — Class X
@@ -127,5 +137,34 @@ export default function About() {
         </div>
       </div>
     </section>
+  );
+}
+
+function CapIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+  );
+}
+
+function BookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+  );
+}
+
+function SchoolIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 21h18"/>
+      <path d="M5 21V7l7-4 7 4v14"/>
+      <path d="M9 10h1M14 10h1M9 14h1M14 14h1"/>
+      <path d="M10 21v-3h4v3"/>
+    </svg>
   );
 }

@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import { projects, type Project } from '../data/projects';
+import { useReveal } from '../hooks/useReveal';
 import './Projects.css';
 
 export default function Projects() {
+  const headerRef = useReveal<HTMLDivElement>();
+
   return (
     <section id="projects" className="section projects" aria-labelledby="projects-heading">
       <div className="container">
-        <span className="section-label">What I've built</span>
-        <h2 className="section-title" id="projects-heading">Featured Projects</h2>
-        <p className="section-subtitle">
-          A selection of things I've built to explore ideas, learn new skills, and
-          solve interesting problems. Each includes my honest notes on scope and evaluation.
-        </p>
+        <div ref={headerRef} className="reveal">
+          <span className="section-label">What I've built</span>
+          <h2 className="section-title" id="projects-heading">Featured Projects</h2>
+          <p className="section-subtitle">
+            A selection of things I've built to explore ideas, learn new skills, and
+            solve interesting problems.
+          </p>
+        </div>
 
         <div className="projects__grid">
           {projects.map((project, i) => (
@@ -24,16 +29,18 @@ export default function Projects() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const cardRef   = useReveal<HTMLElement>();
   const [expanded, setExpanded] = useState(false);
   const detailsId = `project-details-${project.id}`;
 
   return (
     <article
-      className="project-card card"
-      style={{ animationDelay: `${index * 80}ms` }}
+      ref={cardRef}
+      className="project-card reveal"
+      style={{ transitionDelay: `${index * 70}ms` }}
       aria-label={project.title}
     >
-      {/* Coloured top bar */}
+      {/* Top accent bar */}
       <div className="project-card__bar" aria-hidden="true" />
 
       <div className="project-card__body">
@@ -65,21 +72,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        {/* Expandable details */}
+        {/* Expandable: evaluation + reflection — no warning boxes */}
         <div
           id={detailsId}
           className={`project-card__details${expanded ? ' project-card__details--open' : ''}`}
           hidden={!expanded}
           aria-live="polite"
         >
-          {/* Evaluation */}
           <div className="project-card__section">
             <p className="project-card__section-label">Evaluation</p>
             <p className="project-card__text">{project.evaluation}</p>
-            <div className="project-card__caveat">
-              <CautionIcon />
-              <p>{project.evaluationCaveat}</p>
-            </div>
             {project.evaluationDetailsUrl && (
               <a
                 href={project.evaluationDetailsUrl}
@@ -93,7 +95,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             )}
           </div>
 
-          {/* Learning */}
           <div className="project-card__section">
             <p className="project-card__section-label">What I learned</p>
             <p className="project-card__text project-card__text--serif">
@@ -141,7 +142,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-/* ── Icons ────────────────────────────────────────────────────────────────── */
 function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
@@ -155,14 +155,6 @@ function ExternalIcon() {
     <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true">
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
-    </svg>
-  );
-}
-
-function CautionIcon() {
-  return (
-    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0, marginTop: '2px' }}>
-      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
     </svg>
   );
 }

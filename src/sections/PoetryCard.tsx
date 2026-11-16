@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useReveal } from '../hooks/useReveal';
 import './PoetryCard.css';
 
 export default function PoetryCard() {
+  const cardRef = useReveal<HTMLDivElement>();
+
   return (
     <section
       id="poetry-link"
@@ -9,7 +12,7 @@ export default function PoetryCard() {
       aria-labelledby="poetry-feature-heading"
     >
       <div className="container">
-        <div className="poetry-feature__card">
+        <div ref={cardRef} className="poetry-feature__card reveal">
           {/* Decorative ink blot */}
           <div className="poetry-feature__bg-deco" aria-hidden="true">
             <div className="poetry-feature__ink poetry-feature__ink--1" />

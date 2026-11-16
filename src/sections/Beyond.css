@@ -1,15 +1,15 @@
 /* ── Beyond Engineering ───────────────────────────────────────────────────── */
-.beyond {
-  background-color: var(--color-bg);
-}
+.beyond { background-color: var(--color-bg); }
+
+.beyond__header { margin-bottom: var(--space-4); }
 
 .beyond__intro {
-  margin-top: var(--space-6);
+  margin-top: var(--space-4);
   margin-bottom: var(--space-10);
   max-width: 56ch;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .beyond__intro p {
@@ -18,7 +18,6 @@
   line-height: var(--leading-relaxed);
 }
 
-/* Cards */
 .beyond__cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -27,40 +26,55 @@
 
 .beyond__card {
   display: flex;
-  gap: var(--space-5);
+  gap: var(--space-4);
   align-items: flex-start;
   padding: var(--space-6);
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border-soft);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-xs);
-  transition: transform var(--duration-base) var(--ease),
-              box-shadow var(--duration-base) var(--ease);
+  transition:
+    transform     var(--duration-base) var(--ease),
+    box-shadow    var(--duration-base) var(--ease),
+    border-color  var(--duration-base) var(--ease);
 }
 
 .beyond__card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
+  border-color: rgba(203, 179, 232, 0.35);
 }
 
-/* Color variants */
-.beyond__card--sage  { border-top: 3px solid var(--color-accent); }
-.beyond__card--warm  { border-top: 3px solid #c9a87c; }
-.beyond__card--earth { border-top: 3px solid #a07855; }
+/* Top border accent per card */
+.beyond__card--sage  { border-top: 2px solid var(--color-accent); }
+.beyond__card--warm  { border-top: 2px solid #C8A96E; }
+.beyond__card--earth { border-top: 2px solid #A07855; }
 
-.beyond__card-emoji {
-  font-size: 2rem;
-  line-height: 1;
+.beyond__card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-pine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  transition: background-color var(--duration-fast) var(--ease),
+              color var(--duration-fast) var(--ease);
 }
-
+.beyond__card:hover .beyond__card-icon {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent-dark);
+}
 .beyond__card-content { display: flex; flex-direction: column; gap: var(--space-2); }
 
 .beyond__card-title {
   font-family: var(--font-serif);
   font-size: var(--text-lg);
   font-weight: 500;
-  color: var(--color-forest);
+  color: var(--color-pine);
   margin: 0;
 }
 
@@ -70,7 +84,6 @@
   line-height: var(--leading-relaxed);
 }
 
-/* Closing */
 .beyond__closing {
   margin-top: var(--space-10);
   font-family: var(--font-serif);
@@ -80,5 +93,5 @@
   max-width: 52ch;
   line-height: var(--leading-relaxed);
   padding-left: var(--space-5);
-  border-left: 3px solid var(--color-accent);
+  border-left: 2px solid rgba(203, 179, 232, 0.5);
 }

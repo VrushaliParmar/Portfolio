@@ -9,9 +9,43 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero" aria-label="Introduction">
-      <div className="hero__bg" aria-hidden="true">
-        <div className="hero__bg-shape hero__bg-shape--1" />
-        <div className="hero__bg-shape hero__bg-shape--2" />
+      {/* Subtle flowing curves — decorative only, no relation to photo */}
+      <div className="hero__curves" aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {/* Lilac curve — upper right */}
+          <path
+            d="M 1100 -80 Q 1300 200 1200 420 Q 1100 600 1350 750"
+            fill="none"
+            stroke="#CBB3E8"
+            strokeWidth="1.5"
+            opacity="0.22"
+            strokeLinecap="round"
+          />
+          {/* Pine curve — lower left */}
+          <path
+            d="M -60 600 Q 120 500 200 320 Q 280 140 180 -20"
+            fill="none"
+            stroke="#1F3B2E"
+            strokeWidth="1"
+            opacity="0.07"
+            strokeLinecap="round"
+          />
+          {/* Lilac arc — mid right */}
+          <path
+            d="M 900 900 Q 1100 700 1050 500 Q 1000 300 1180 100"
+            fill="none"
+            stroke="#CBB3E8"
+            strokeWidth="1"
+            opacity="0.14"
+            strokeLinecap="round"
+          />
+        </svg>
       </div>
 
       <div className="container hero__inner">
@@ -20,7 +54,7 @@ export default function Hero() {
           {/* Name */}
           <h1 className="hero__name">
             Hi, I'm{' '}
-            <span className="hero__name-accent">Vrushali.</span>
+            <span className="hero__name-accent">Vrushali Parmar.</span>
           </h1>
 
           {/* Identity */}

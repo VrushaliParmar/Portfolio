@@ -1,12 +1,15 @@
+import { useReveal } from '../hooks/useReveal';
 import './Journey.css';
 
 export default function Journey() {
+  const contentRef = useReveal<HTMLDivElement>();
+  const visualRef  = useReveal<HTMLDivElement>();
   return (
     <section id="journey" className="section section-alt journey" aria-labelledby="journey-heading">
       <div className="container">
         <div className="journey__layout">
           {/* Text column */}
-          <div className="journey__content">
+          <div ref={contentRef} className="journey__content reveal">
             <span className="section-label">My journey</span>
             <h2 className="section-title" id="journey-heading">
               From the Mountains<br />
@@ -54,7 +57,7 @@ export default function Journey() {
           </div>
 
           {/* Visual accent column */}
-          <div className="journey__visual" aria-hidden="true">
+          <div ref={visualRef} className="journey__visual reveal reveal-delay-2" aria-hidden="true">
             {/* Mountain motif — pure CSS */}
             <div className="journey__mountain-wrap">
               <svg

@@ -1,13 +1,17 @@
 import { siteConfig } from '../data/config';
+import { useReveal } from '../hooks/useReveal';
 import './Contact.css';
 
 export default function Contact() {
+  const textRef = useReveal<HTMLDivElement>();
+  const cardRef = useReveal<HTMLDivElement>();
+
   return (
     <section id="contact" className="section contact" aria-labelledby="contact-heading">
       <div className="container">
         <div className="contact__layout">
           {/* Text */}
-          <div className="contact__text">
+          <div ref={textRef} className="contact__text reveal">
             <span className="section-label">Get in touch</span>
             <h2 className="section-title" id="contact-heading">
               Let's connect.
@@ -23,7 +27,7 @@ export default function Contact() {
           </div>
 
           {/* Contact card */}
-          <div className="contact__card card">
+          <div ref={cardRef} className="contact__card card reveal reveal-delay-2">
             <h3 className="contact__card-heading">Ways to reach me</h3>
 
             <ul className="contact__links" role="list">

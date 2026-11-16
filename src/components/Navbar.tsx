@@ -1,38 +1,39 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { siteConfig } from '../data/config';
+import { useActiveSection } from '../hooks/useActiveSection';
 import './Navbar.css';
 
 const NAV_ITEMS = [
-  { label: 'Home',               href: '/#home' },
-  { label: 'About',              href: '/#about' },
-  { label: 'Projects',           href: '/#projects' },
-  { label: 'Experience',         href: '/#experience' },
-  { label: 'Beyond Engineering', href: '/#beyond' },
-  { label: 'Contact',            href: '/#contact' },
+  { label: 'Home',               href: '/#home',       id: 'home'       },
+  { label: 'About',              href: '/#about',      id: 'about'      },
+  { label: 'Projects',           href: '/#projects',   id: 'projects'   },
+  { label: 'Experience',         href: '/#experience', id: 'experience' },
+  { label: 'Beyond Engineering', href: '/#beyond',     id: 'beyond'     },
+  { label: 'Contact',            href: '/#contact',    id: 'contact'    },
 ];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [scrolled, setScrolled]   = useState(false);
-  const location                  = useLocation();
-  const isPoetryPage              = location.pathname === '/poetry';
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location                = useLocation();
+  const isPoetryPage            = location.pathname === '/poetry';
 
-  // Shadow after scrolling 20 px
+  // Active section — only meaningful on the main portfolio page
+  const activeSection = useActiveSection();
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu on resize to desktop
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false); };
+    const onResize = () => { if (window.innerWidth >= 1024) setMenuOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -40,7 +41,6 @@ export default function Navbar() {
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
-  // Smooth-scroll helper: works for same-page anchors and cross-page anchors
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       if (href.startsWith('/#')) {
@@ -48,9 +48,7 @@ export default function Navbar() {
         if (!isPoetryPage) {
           e.preventDefault();
           document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-          closeMenu();
         }
-        // If on poetry page, let the link navigate normally (React Router Link handles it)
       }
       closeMenu();
     },
@@ -60,7 +58,8 @@ export default function Navbar() {
   return (
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`} role="banner">
       <div className="navbar__inner container">
-        {/* Logo / wordmark */}
+
+        {/* Logo */}
         <Link to="/" className="navbar__logo" aria-label="Vrushali Parmar — home">
           <span className="navbar__logo-name">Vrushali Parmar</span>
         </Link>
@@ -68,22 +67,26 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="navbar__nav" aria-label="Main navigation">
           <ul className="navbar__list" role="list">
-            {NAV_ITEMS.map(item => (
-              <li key={item.href}>
-                <Link
-                  to={item.href}
-                  className="navbar__link"
-                  onClick={e => handleNavClick(e, item.href)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map(item => {
+              const isActive = !isPoetryPage && activeSection === item.id;
+              return (
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className={`navbar__link${isActive ? ' navbar__link--active' : ''}`}
+                    aria-current={isActive ? 'location' : undefined}
+                    onClick={e => handleNavClick(e, item.href)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
             <li>
               <Link
                 to="/poetry"
-                className="navbar__link navbar__link--poetry"
-                aria-label="Somewhere Between Words — poetry page (opens in this tab)"
+                className={`navbar__link navbar__link--poetry${isPoetryPage ? ' navbar__link--active' : ''}`}
+                aria-current={isPoetryPage ? 'page' : undefined}
               >
                 Poetry
                 <span className="navbar__poetry-arrow" aria-hidden="true">↗</span>
@@ -92,24 +95,14 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Social icons — desktop only */}
+        {/* Social icons */}
         <div className="navbar__social" aria-label="Social links">
-          <a
-            href={siteConfig.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="navbar__social-link"
-            aria-label="GitHub profile (opens in new tab)"
-          >
+          <a href={siteConfig.github}  target="_blank" rel="noopener noreferrer"
+            className="navbar__social-link" aria-label="GitHub (opens in new tab)">
             <GitHubIcon />
           </a>
-          <a
-            href={siteConfig.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="navbar__social-link"
-            aria-label="LinkedIn profile (opens in new tab)"
-          >
+          <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer"
+            className="navbar__social-link" aria-label="LinkedIn (opens in new tab)">
             <LinkedInIcon />
           </a>
         </div>
@@ -128,7 +121,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile drawer */}
       <div
         id="mobile-menu"
         className={`navbar__mobile${menuOpen ? ' navbar__mobile--open' : ''}`}
@@ -136,22 +129,26 @@ export default function Navbar() {
       >
         <nav aria-label="Mobile navigation">
           <ul className="navbar__mobile-list" role="list">
-            {NAV_ITEMS.map(item => (
-              <li key={item.href}>
-                <Link
-                  to={item.href}
-                  className="navbar__mobile-link"
-                  onClick={e => handleNavClick(e, item.href)}
-                  tabIndex={menuOpen ? 0 : -1}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map(item => {
+              const isActive = !isPoetryPage && activeSection === item.id;
+              return (
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className={`navbar__mobile-link${isActive ? ' navbar__mobile-link--active' : ''}`}
+                    aria-current={isActive ? 'location' : undefined}
+                    onClick={e => handleNavClick(e, item.href)}
+                    tabIndex={menuOpen ? 0 : -1}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
             <li>
               <Link
                 to="/poetry"
-                className="navbar__mobile-link navbar__mobile-link--poetry"
+                className={`navbar__mobile-link navbar__mobile-link--poetry${isPoetryPage ? ' navbar__mobile-link--active' : ''}`}
                 onClick={closeMenu}
                 tabIndex={menuOpen ? 0 : -1}
               >
@@ -159,27 +156,22 @@ export default function Navbar() {
               </Link>
             </li>
           </ul>
-
           <div className="navbar__mobile-social">
-            <a href={siteConfig.github}  target="_blank" rel="noopener noreferrer" aria-label="GitHub" tabIndex={menuOpen ? 0 : -1}>GitHub</a>
-            <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" tabIndex={menuOpen ? 0 : -1}>LinkedIn</a>
+            <a href={siteConfig.github}   target="_blank" rel="noopener noreferrer"
+               aria-label="GitHub" tabIndex={menuOpen ? 0 : -1}>GitHub</a>
+            <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer"
+               aria-label="LinkedIn" tabIndex={menuOpen ? 0 : -1}>LinkedIn</a>
           </div>
         </nav>
       </div>
 
-      {/* Overlay */}
       {menuOpen && (
-        <div
-          className="navbar__overlay"
-          onClick={closeMenu}
-          aria-hidden="true"
-        />
+        <div className="navbar__overlay" onClick={closeMenu} aria-hidden="true" />
       )}
     </header>
   );
 }
 
-/* ── Inline SVG icons ─────────────────────────────────────────────────────── */
 function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
