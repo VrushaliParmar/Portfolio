@@ -16,9 +16,12 @@ export const siteConfig = {
 
   email: 'vrushliparmar@gmail.com',
 
-  // 👉 Place your resume PDF in public/resume.pdf and set this to '/resume.pdf'.
-  // Leave empty to hide the resume button.
-  resumeUrl: '',
+  // Resume — Google Drive view link (opens in new tab, no download claimed)
+  resumeUrl: 'https://drive.google.com/file/d/1S40-wcI4tNM3Nlap08_VDblOyyqYAgsK/view?usp=sharing',
+
+  // 👉 Photo — place your headshot at public/vrushali-photo.jpg and set to '/vrushali-photo.jpg'
+  // Leave empty to show the initials placeholder instead.
+  photoUrl: '/vrushali-photo.jpg',
 
   // Open Graph image — 👉 Add a 1200×630 image to public/og-image.png and set the path.
   ogImage: '',

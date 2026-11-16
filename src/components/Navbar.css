@@ -6,7 +6,7 @@
   right: 0;
   z-index: 100;
   height: var(--nav-height);
-  background-color: rgba(248, 245, 240, 0.9);
+  background-color: rgba(245, 240, 232, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
@@ -36,7 +36,7 @@
   font-family: var(--font-serif);
   font-size: var(--text-lg);
   font-weight: 500;
-  color: var(--color-forest);
+  color: var(--color-pine);
   letter-spacing: -0.01em;
   transition: color var(--duration-fast) var(--ease);
 }
@@ -78,7 +78,7 @@
 
 .navbar__link:hover,
 .navbar__link:focus-visible {
-  color: var(--color-forest);
+  color: var(--color-pine);
   background-color: var(--color-surface-alt);
 }
 
@@ -90,7 +90,7 @@
 
 .navbar__link--poetry:hover,
 .navbar__link--poetry:focus-visible {
-  color: var(--color-forest);
+  color: var(--color-pine);
   background-color: var(--color-accent-light);
 }
 
@@ -146,7 +146,7 @@
   display: block;
   width: 100%;
   height: 2px;
-  background-color: var(--color-forest);
+  background-color: var(--color-pine);
   border-radius: var(--radius-full);
   transition: transform var(--duration-base) var(--ease),
               opacity var(--duration-base) var(--ease),
@@ -212,7 +212,7 @@
 
 .navbar__mobile-link:hover,
 .navbar__mobile-link:focus-visible {
-  color: var(--color-forest);
+  color: var(--color-pine);
   background-color: var(--color-surface-alt);
 }
 

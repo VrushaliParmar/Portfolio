@@ -1,6 +1,6 @@
 /* ============================================================
    VRUSHALI PARMAR PORTFOLIO — GLOBAL STYLES
-   Design system: warm editorial, nature-inspired palette
+   Design system: Oatmeal · Pine Green · Soft Lilac
    ============================================================ */
 
 /* ---------- Google Fonts import ---------- */
@@ -8,29 +8,39 @@
 
 /* ---------- CSS custom properties ---------- */
 :root {
-  /* Palette */
-  --color-bg:          #f8f5f0;       /* warm off-white */
-  --color-surface:     #ffffff;
-  --color-surface-alt: #f0ede8;       /* slightly deeper warm neutral */
-  --color-border:      #ddd8d0;
-  --color-border-soft: #ede9e3;
+  /* ── Brand palette ───────────────────────────────────── */
+  --color-oatmeal:      #E8DCC6;   /* warm neutral background */
+  --color-pine:         #1F3B2E;   /* primary dark — text, nav, actions */
+  --color-lilac:        #CBB3E8;   /* soft accent — highlights, secondary details */
 
-  --color-forest:      #2d4a3e;       /* deep forest green – primary dark */
-  --color-slate:       #3d4f5c;       /* deep slate – secondary dark */
-  --color-muted:       #6b7a84;       /* muted slate for secondary text */
-  --color-subtle:      #9aa5ac;       /* subtle / placeholder text */
+  /* ── Derived semantic tokens ─────────────────────────── */
+  --color-bg:           #F5F0E8;   /* slightly lighter oatmeal for page bg */
+  --color-surface:      #FDFAF5;   /* card / section surface — near-white warm */
+  --color-surface-alt:  #EDE5D4;   /* oatmeal-tinted alternate surface */
+  --color-oatmeal-mid:  #E8DCC6;   /* direct oatmeal reference */
 
-  --color-accent:      #7c9e87;       /* sage green accent */
-  --color-accent-dark: #5a7d65;       /* deeper accent for hover */
-  --color-accent-light:#e8f0eb;       /* tinted accent background */
+  --color-border:       #D6CBBA;   /* mid-tone oatmeal border */
+  --color-border-soft:  #EBE2D2;   /* soft oatmeal border */
 
-  --color-text:        #1e2a26;       /* near-black, warm */
-  --color-text-secondary: #4a5c54;
+  --color-forest:       #1F3B2E;   /* alias → pine (used throughout components) */
+  --color-pine:         #1F3B2E;   /* pine green */
+  --color-pine-mid:     #2E5440;   /* slightly lighter pine for hover states */
 
-  /* Poetry page palette – quieter */
-  --color-poetry-bg:   #faf7f4;
-  --color-poetry-ink:  #2c2420;
-  --color-poetry-muted:#8c7b74;
+  --color-muted:        #5A6E63;   /* muted pine-green for secondary text */
+  --color-subtle:       #8E9E97;   /* subtle / placeholder text */
+
+  --color-accent:       #CBB3E8;   /* soft lilac accent */
+  --color-accent-dark:  #9B7CC8;   /* deeper lilac for hover / emphasis */
+  --color-accent-light: #F0EAF9;   /* very pale lilac tint backgrounds */
+
+  --color-text:         #1A2820;   /* near-black, warm pine-tinted */
+  --color-text-secondary: #3D5248; /* secondary body text */
+
+  /* ── Poetry page ─────────────────────────────────────── */
+  --color-poetry-bg:    #F8F3EC;   /* warm oatmeal page bg */
+  --color-poetry-ink:   #1F3B2E;   /* pine ink for headings */
+  --color-poetry-muted: #7A6E5E;   /* warm muted for secondary text */
+  --color-poetry-lilac: #CBB3E8;   /* lilac accent for poetry page details */
 
   /* Typography */
   --font-serif:  'Lora', Georgia, 'Times New Roman', serif;
@@ -77,10 +87,10 @@
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-xs: 0 1px 3px rgba(45, 74, 62, 0.06);
-  --shadow-sm: 0 2px 8px rgba(45, 74, 62, 0.08);
-  --shadow-md: 0 4px 16px rgba(45, 74, 62, 0.10);
-  --shadow-lg: 0 8px 32px rgba(45, 74, 62, 0.12);
+  --shadow-xs: 0 1px 3px rgba(31, 59, 46, 0.06);
+  --shadow-sm: 0 2px 8px rgba(31, 59, 46, 0.08);
+  --shadow-md: 0 4px 16px rgba(31, 59, 46, 0.10);
+  --shadow-lg: 0 8px 32px rgba(31, 59, 46, 0.12);
 
   /* Transitions */
   --ease:         cubic-bezier(0.4, 0, 0.2, 1);
@@ -245,23 +255,23 @@ ul, ol { list-style: none; }
 .btn:active { transform: translateY(0); }
 
 .btn-primary {
-  background-color: var(--color-forest);
+  background-color: var(--color-pine);
   color: #ffffff;
-  border-color: var(--color-forest);
+  border-color: var(--color-pine);
 }
 .btn-primary:hover {
-  background-color: var(--color-accent-dark);
-  border-color: var(--color-accent-dark);
+  background-color: var(--color-pine-mid);
+  border-color: var(--color-pine-mid);
   box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--color-forest);
-  border-color: var(--color-forest);
+  color: var(--color-pine);
+  border-color: var(--color-pine);
 }
 .btn-secondary:hover {
-  background-color: var(--color-forest);
+  background-color: var(--color-pine);
   color: #ffffff;
   box-shadow: var(--shadow-sm);
 }
@@ -273,17 +283,18 @@ ul, ol { list-style: none; }
 }
 .btn-ghost:hover {
   background-color: var(--color-surface-alt);
-  color: var(--color-forest);
+  color: var(--color-pine);
   border-color: var(--color-accent);
 }
 
 .btn-accent {
   background-color: var(--color-accent);
-  color: #ffffff;
+  color: var(--color-pine);
   border-color: var(--color-accent);
 }
 .btn-accent:hover {
   background-color: var(--color-accent-dark);
+  color: #ffffff;
   border-color: var(--color-accent-dark);
   box-shadow: var(--shadow-md);
 }
@@ -345,7 +356,7 @@ ul, ol { list-style: none; }
   top: -100%;
   left: var(--space-4);
   z-index: 9999;
-  background: var(--color-forest);
+  background: var(--color-pine);
   color: white;
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);

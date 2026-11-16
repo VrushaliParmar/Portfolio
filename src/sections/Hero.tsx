@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { siteConfig } from '../data/config';
 import './Hero.css';
 
@@ -8,18 +9,14 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero" aria-label="Introduction">
-      {/* Subtle background texture */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__bg-shape hero__bg-shape--1" />
         <div className="hero__bg-shape hero__bg-shape--2" />
-        <div className="hero__bg-shape hero__bg-shape--3" />
       </div>
 
       <div className="container hero__inner">
+        {/* ── Left: text content ── */}
         <div className="hero__content">
-          {/* Greeting */}
-          <p className="hero__greeting" aria-hidden="true">Hello, world.</p>
-
           {/* Name */}
           <h1 className="hero__name">
             Hi, I'm{' '}
@@ -29,7 +26,8 @@ export default function Hero() {
           {/* Identity */}
           <p className="hero__identity">
             Electronics &amp; Telecommunication Engineering student exploring{' '}
-            <strong>AI/ML</strong>, <strong>software development</strong>, and <strong>VLSI</strong>.
+            <strong>AI/ML</strong>, <strong>software development</strong>, and{' '}
+            <strong>VLSI</strong>.
           </p>
 
           {/* Supporting copy */}
@@ -54,16 +52,16 @@ export default function Hero() {
             >
               Get in touch
             </button>
-            {siteConfig.resumeUrl && (
-              <a
-                href={siteConfig.resumeUrl}
-                className="btn btn-ghost"
-                download
-                aria-label="Download resume (PDF)"
-              >
-                <DownloadIcon /> Resume
-              </a>
-            )}
+            {/* Resume — always visible, opens Google Drive in new tab */}
+            <a
+              href={siteConfig.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-resume"
+              aria-label="View resume (opens in new tab)"
+            >
+              <ResumeIcon /> View Resume
+            </a>
           </div>
 
           {/* Social links */}
@@ -92,39 +90,50 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Decorative right panel */}
-        <div className="hero__visual" aria-hidden="true">
-          <div className="hero__visual-card">
-            <div className="hero__visual-line" />
-            <div className="hero__visual-tags">
-              {[
-                'Python', 'React', 'TensorFlow',
-                'FastAPI', 'Flutter', 'LangChain',
-                'scikit-learn', 'Cadence Virtuoso',
-              ].map(tag => (
-                <span key={tag} className="hero__visual-tag">{tag}</span>
-              ))}
-            </div>
-            <div className="hero__visual-quote">
-              <span className="hero__visual-quote-mark">"</span>
-              <span>Learning by building.</span>
-            </div>
-          </div>
-          {/* Scroll indicator */}
-          <div className="hero__scroll-hint">
-            <div className="hero__scroll-dot" />
-            <span>scroll</span>
-          </div>
+        {/* ── Right: photo ── */}
+        <div className="hero__photo-wrap">
+          <HeroPhoto />
         </div>
       </div>
     </section>
   );
 }
 
-function DownloadIcon() {
+/* ── Photo with graceful fallback ─────────────────────────────────────────── */
+function HeroPhoto() {
+  const [imgError, setImgError] = useState(false);
+
+  if (!siteConfig.photoUrl || imgError) {
+    // Initials placeholder — shown until the real photo is placed in public/
+    return (
+      <div className="hero__photo hero__photo--placeholder" aria-label="Vrushali Parmar">
+        <span className="hero__photo-initials" aria-hidden="true">VP</span>
+        <p className="hero__photo-hint">
+          👉 Add your photo to <code>public/vrushali-photo.jpg</code>
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={siteConfig.photoUrl}
+      alt="Vrushali Parmar"
+      className="hero__photo"
+      onError={() => setImgError(true)}
+      width="400"
+      height="480"
+      loading="eager"
+      decoding="async"
+    />
+  );
+}
+
+/* ── Icons ────────────────────────────────────────────────────────────────── */
+function ResumeIcon() {
   return (
     <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
-      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"/>
+      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd"/>
     </svg>
   );
 }

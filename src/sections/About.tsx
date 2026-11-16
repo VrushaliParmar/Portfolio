@@ -57,7 +57,7 @@ export default function About() {
               and I think that's exactly the right place to be right now.
             </p>
 
-            {/* Education card */}
+            {/* Education cards */}
             <div className="about__edu-card">
               <div className="about__edu-icon" aria-hidden="true">🎓</div>
               <div>
@@ -68,6 +68,32 @@ export default function About() {
                   MKSSS's Cummins College of Engineering for Women, Pune
                 </p>
                 <p className="about__edu-meta">CGPA: 7.56 / 10 · Final year</p>
+              </div>
+            </div>
+
+            <div className="about__edu-card">
+              <div className="about__edu-icon" aria-hidden="true">📘</div>
+              <div>
+                <p className="about__edu-degree">
+                  HSC — Class XII
+                </p>
+                <p className="about__edu-school">
+                  Nemsushil Junior High School, Taloda
+                </p>
+                <p className="about__edu-meta">90.60% · 2021</p>
+              </div>
+            </div>
+
+            <div className="about__edu-card">
+              <div className="about__edu-icon" aria-hidden="true">📗</div>
+              <div>
+                <p className="about__edu-degree">
+                  SSC — Class X
+                </p>
+                <p className="about__edu-school">
+                  Shremoti Vidyamandir, Taloda
+                </p>
+                <p className="about__edu-meta">90.40% · 2019</p>
               </div>
             </div>
 
