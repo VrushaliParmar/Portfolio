@@ -7,6 +7,7 @@ import About from '../sections/About';
 import Projects from '../sections/Projects';
 import Journey from '../sections/Journey';
 import Experience from '../sections/Experience';
+import Clubs from '../sections/Clubs';
 import Beyond from '../sections/Beyond';
 import PoetryCard from '../sections/PoetryCard';
 import Contact from '../sections/Contact';
@@ -39,6 +40,7 @@ export default function PortfolioPage() {
         <Projects />
         <Journey />
         <Experience />
+        <Clubs />
         <Beyond />
         <PoetryCard />
         <Contact />
