@@ -1,0 +1,16 @@
+/* ── Portfolio page wrapper ───────────────────────────────────────────────── */
+.portfolio-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.portfolio-page main {
+  flex: 1;
+  padding-top: var(--nav-height); /* offset fixed navbar */
+}
+
+/* Remove double padding-top from hero since it already accounts for nav */
+.portfolio-page main > #home.hero {
+  padding-top: 0;
+}
