@@ -95,45 +95,46 @@ function ClubCard({ club, index }: { club: Club; index: number }) {
 
       <div className="clubs__card-body">
 
-        {/* Header */}
-        <div className="clubs__card-header">
-          <div className="clubs__icon-wrap" aria-hidden="true">
-            <Icon />
+        {/* ── Left: identity panel ── */}
+        <div className="clubs__identity">
+          <div className="clubs__card-header">
+            <div className="clubs__icon-wrap" aria-hidden="true">
+              <Icon />
+            </div>
+            <div className="clubs__card-title-group">
+              <h3 className="clubs__card-name">{club.name}</h3>
+              {club.nameExpanded && (
+                <p className="clubs__card-name-full">{club.nameExpanded}</p>
+              )}
+              <p className="clubs__card-role">{club.role}</p>
+            </div>
           </div>
-          <div className="clubs__card-title-group">
-            <h3 className="clubs__card-name">{club.name}</h3>
-            {club.nameExpanded && (
-              <p className="clubs__card-name-full">{club.nameExpanded}</p>
-            )}
-            <p className="clubs__card-role">{club.role}</p>
-          </div>
-        </div>
 
-        {/* Tagline chips */}
-        <div className="clubs__tagline" aria-hidden="true">
-          {club.tagline.split(' · ').map(t => (
-            <span key={t} className={`clubs__chip clubs__chip--${club.accent}`}>{t}</span>
-          ))}
-        </div>
-
-        {/* About */}
-        <p className="clubs__about">{club.about}</p>
-
-        {/* Responsibilities */}
-        <div className="clubs__responsibilities">
-          <p className="clubs__responsibilities-label">What I do</p>
-          <ul className="clubs__list" aria-label={`Responsibilities at ${club.name}`}>
-            {club.responsibilities.map((r, ri) => (
-              <li key={ri}>{r}</li>
+          <div className="clubs__tagline" aria-hidden="true">
+            {club.tagline.split(' · ').map(t => (
+              <span key={t} className={`clubs__chip clubs__chip--${club.accent}`}>{t}</span>
             ))}
-          </ul>
+          </div>
+
+          <p className="clubs__about">{club.about}</p>
         </div>
 
-        {/* Skills */}
-        <div className="clubs__skills" role="list" aria-label="Skills developed">
-          {club.skills.map(s => (
-            <span key={s} className="tag" role="listitem">{s}</span>
-          ))}
+        {/* ── Right: responsibilities + skills ── */}
+        <div className="clubs__content">
+          <div className="clubs__responsibilities">
+            <p className="clubs__responsibilities-label">What I do</p>
+            <ul className="clubs__list" aria-label={`Responsibilities at ${club.name}`}>
+              {club.responsibilities.map((r, ri) => (
+                <li key={ri}>{r}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="clubs__skills" role="list" aria-label="Skills developed">
+            {club.skills.map(s => (
+              <span key={s} className="tag" role="listitem">{s}</span>
+            ))}
+          </div>
         </div>
 
       </div>

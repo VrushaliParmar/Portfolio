@@ -5,7 +5,6 @@
   overflow: hidden;
 }
 
-/* Subtle background curve — organic, not distracting */
 .clubs::before {
   content: '';
   position: absolute;
@@ -26,13 +25,13 @@
   max-width: 56ch;
 }
 
-/* ── Two-column card grid ─────────────────────────────────────────────────── */
+/* ── Single-column stack — full-width cards ───────────────────────────────── */
 .clubs__grid {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
-  gap: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
 /* ── Club card ────────────────────────────────────────────────────────────── */
@@ -41,8 +40,6 @@
   border: 1px solid var(--color-border-soft);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-xs);
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   transition:
     box-shadow   var(--duration-base) var(--ease),
@@ -52,37 +49,53 @@
 
 .clubs__card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
-}
-
-/* Accent strip top — lilac for Happy Hours, pine for ACM */
-.clubs__card-bar {
-  height: 3px;
+  transform: translateY(-3px);
 }
 
 .clubs__card--lilac .clubs__card-bar {
+  height: 3px;
   background: linear-gradient(90deg, #CBB3E8 0%, #8B6CC4 100%);
 }
-.clubs__card--lilac:hover {
-  border-color: rgba(203, 179, 232, 0.5);
-}
+.clubs__card--lilac:hover { border-color: rgba(203, 179, 232, 0.5); }
 
 .clubs__card--pine .clubs__card-bar {
+  height: 3px;
   background: linear-gradient(90deg, #2A4F3C 0%, #1F3B2E 100%);
 }
-.clubs__card--pine:hover {
-  border-color: rgba(31, 59, 46, 0.25);
+.clubs__card--pine:hover { border-color: rgba(31, 59, 46, 0.22); }
+
+/* ── Card inner layout: header row + content ─────────────────────────────── */
+.clubs__card-body {
+  display: grid;
+  /* Left: identity panel | Right: responsibilities + skills */
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: auto;
+  gap: 0;
 }
 
-.clubs__card-body {
+@media (max-width: 900px) {
+  .clubs__card-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Left identity panel ──────────────────────────────────────────────────── */
+.clubs__identity {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  padding: var(--space-7);
-  flex: 1;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  border-right: 1px solid var(--color-border-soft);
 }
 
-/* ── Card header: icon + title ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .clubs__identity {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-soft);
+    padding: var(--space-6);
+  }
+}
+
 .clubs__card-header {
   display: flex;
   gap: var(--space-4);
@@ -97,14 +110,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .clubs__card--lilac .clubs__icon-wrap {
   background-color: var(--color-accent-light);
   color: var(--color-accent-dark);
 }
-
 .clubs__card--pine .clubs__icon-wrap {
   background-color: rgba(31, 59, 46, 0.07);
   color: var(--color-pine);
@@ -130,6 +141,7 @@
   font-size: var(--text-xs);
   color: var(--color-muted);
   line-height: 1.4;
+  margin-top: 2px;
 }
 
 .clubs__card-role {
@@ -141,7 +153,7 @@
   line-height: 1.4;
 }
 
-/* ── Tagline chips ────────────────────────────────────────────────────────── */
+/* Tagline chips */
 .clubs__tagline {
   display: flex;
   flex-wrap: wrap;
@@ -163,28 +175,38 @@
   color: var(--color-accent-dark);
   border: 1px solid rgba(139, 108, 196, 0.14);
 }
-
 .clubs__chip--pine {
   background-color: rgba(31, 59, 46, 0.07);
   color: var(--color-pine-mid);
   border: 1px solid rgba(31, 59, 46, 0.12);
 }
 
-/* ── About text ───────────────────────────────────────────────────────────── */
+/* About blurb inside identity panel */
 .clubs__about {
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   line-height: var(--leading-relaxed);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border-soft);
 }
 
-/* ── Responsibilities ─────────────────────────────────────────────────────── */
+/* ── Right content panel ──────────────────────────────────────────────────── */
+.clubs__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-8);
+}
+
+@media (max-width: 900px) {
+  .clubs__content { padding: var(--space-6); }
+}
+
+/* Responsibilities */
 .clubs__responsibilities {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  flex: 1;
 }
 
 .clubs__responsibilities-label {
@@ -200,7 +222,7 @@
 .clubs__list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -219,34 +241,20 @@
   content: '';
   position: absolute;
   left: 0;
-  top: 0.6em;
+  top: 0.65em;
   width: 5px;
   height: 5px;
   border-radius: var(--radius-full);
-  flex-shrink: 0;
 }
 
-.clubs__card--lilac .clubs__list li::before {
-  background-color: var(--color-accent);
-}
+.clubs__card--lilac .clubs__list li::before { background-color: var(--color-accent); }
+.clubs__card--pine  .clubs__list li::before { background-color: var(--color-pine-mid); opacity: 0.55; }
 
-.clubs__card--pine .clubs__list li::before {
-  background-color: var(--color-pine-mid);
-  opacity: 0.6;
-}
-
-/* ── Skills ───────────────────────────────────────────────────────────────── */
+/* Skills row */
 .clubs__skills {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border-soft);
-  margin-top: auto;
-}
-
-/* ── Responsive ───────────────────────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .clubs__card-body { padding: var(--space-5); }
-  .clubs__card-header { flex-direction: row; }
 }
